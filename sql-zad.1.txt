@@ -1,0 +1,273 @@
+CREATE database firma;
+ 
+CREATE TABLE pracownicy (
+    id_pracownika INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    imie VARCHAR(30) NOT NULL,
+    nazwisko VARCHAR(30) NOT NULL,
+    adres VARCHAR(30),
+    telefon CHAR(9),
+    id_godziny INT,
+    id_pensji INT
+    );
+ 
+CREATE TABLE godziny (
+    id_godziny INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    data DATE,
+    liczba_godzin INT NOT NULL,
+    id_pracownika INT
+    );
+ 
+ 
+CREATE TABLE pensje (
+    id_pensji INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    stanowisko VARCHAR(40) NOT NULL,
+    kwota INT NOT NULL,
+    id_premii INT
+    );
+ 
+CREATE TABLE premie (
+    id_premii INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    rodzaj VARCHAR(40),
+    kwota INT NOT NULL
+    );
+ 
+ALTER TABLE pracownicy 
+ADD FOREIGN KEY(id_godziny)
+REFERENCES godziny(id_godziny)
+ON DELETE SET NULL;
+ 
+ALTER TABLE pracownicy 
+ADD FOREIGN KEY(id_pensji)
+REFERENCES pensje(id_pensji)
+ON DELETE SET NULL;
+ 
+ALTER TABLE godziny
+ADD FOREIGN KEY(id_pracownika)
+REFERENCES pracownicy(id_pracownika)
+ON DELETE SET NULL;
+ 
+ALTER TABLE pensje
+ADD FOREIGN KEY(id_pracownika)
+REFERENCES pracownicy(id_pracownika)
+ON DELETE SET NULL;
+
+ALTER TABLE pensje
+ADD FOREIGN KEY(id_premii)
+REFERENCES premie(id_premii)
+ON DELETE SET NULL;
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "nadgodziny", 200
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia regulaminowa", 100
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia uznaniowa", 100
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia uznaniowa", 200
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia uznaniowa", 300
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia uznaniowa", 400
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia uznaniowa", 500
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia uznaniowa", 600
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia kwartalna", 1200
+);
+
+INSERT INTO premie 
+(rodzaj, kwota) VALUES (
+    "premia roczna", 3000
+);
+
+
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Front-end developer", 4500, 2
+);
+
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Back-end developer", 5500, 4
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Product manager", 5200, 7
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Big Data Engineer", 7500, 3
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Senior Web developer", 9500, 7
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Senior Business Analysis", 7500, 8
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Cloud Security Architect", 5500, 5
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Helpdesk Coordinator", 4200, 1
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "Operations Engineer", 3500, 5
+);
+INSERT INTO pensje
+(stanowisko, kwota, id_premii) VALUES (
+    "C++ Programmer", 8500, 7
+);
+
+
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2012-07-05", 10
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2012-11-05", 8
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2013-11-05", 8
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2013-02-05", 8
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2014-12-12", 8
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2014-12-20", 8
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2015-02-05", 12
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2015-05-05", 12
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2016-10-05", 10
+);
+INSERT INTO godziny
+(data, liczba_godzin) VALUES (
+    "2017-01-05", 10
+);
+
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Jakub","Polak","ul. Nałkowskiego 1, Kraków", "504676324", 2, 3)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Małgorzata","Izdebska","ul. Na Zielonki 3, Kraków", "514633324", 5, 6)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Łukasz","Kruk","ul. Stachiewicza 13/3, Kraków", "697566768", 9, 1)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Patryk","Niewiadomski","ul. Czarnowiejska 12/45, Kraków", "555676324", 4, 6)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Katarzyna","Nowak","ul. Krakowska 11, Rząska", "578676321", 8, 3)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Franciszek","Kowalski","ul. Wysłouchów 12/45, Kraków", "756476324", 7, 3)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Magdalena","Żuk","ul. Opolska 20/13, Kraków", "5694676324", 7, 1)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Jakub","Mirek","ul. Wybickiego 12/34, Kraków", "511676324", 1, 3)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Jakub","Pochodowicz","ul. Bratysławska 12a/4, Kraków", "784676324", 7, 3)
+);
+INSERT INTO pracownicy
+(imie, nazwisko, adres, telefon, id_godziny, id_pensji) VALUES (
+    "Jan","Karmowski","ul. Orla 12/3, Kraków", "604676324", 2, 8)
+);
+
+UPDATE godziny
+SET id_pracownika = 2
+WHERE id_godziny = 1;
+
+UPDATE godziny
+SET id_pracownika = 1
+WHERE id_godziny = 2;
+
+UPDATE godziny
+SET id_pracownika = 4
+WHERE id_godziny = 3;
+
+UPDATE godziny
+SET id_pracownika = 3
+WHERE id_godziny = 4;
+
+UPDATE godziny
+SET id_pracownika = 10
+WHERE id_godziny = 5;
+
+UPDATE godziny
+SET id_pracownika = 9
+WHERE id_godziny = 6;
+
+UPDATE godziny
+SET id_pracownika = 8
+WHERE id_godziny = 7;
+
+UPDATE godziny
+SET id_pracownika = 7
+WHERE id_godziny = 8;
+
+UPDATE godziny
+SET id_pracownika = 6
+WHERE id_godziny = 9;
+
+UPDATE godziny
+SET id_pracownika = 5
+WHERE id_godziny = 10;
