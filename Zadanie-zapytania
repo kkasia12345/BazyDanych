@@ -1,0 +1,195 @@
+/* Zad1 i 2  */
+
+CREATE DATABASE firma;
+CREATE SCHEMA ksiegowosc;
+
+/* Zad4 */
+
+CREATE TABLE ksiegowosc.pracownicy(id_pracownika INT NOT NULL AUTO_INCREMENT,
+                                   imie VARCHAR(30) NOT NULL, 
+                                   nazwisko VARCHAR(30) NOT NULL, 
+                                   adres VARCHAR(50), 
+                                   telefon CHAR(9),
+                                   PRIMARY KEY(id_pracownika)
+                                  );
+CREATE TABLE ksiegowosc.godziny(id_godziny INT NOT NULL AUTO_INCREMENT, 
+                                data DATE NOT NULL, 
+                                liczba_godzin INT NOT NULL,
+                                id_pracownika INT,
+                                PRIMARY KEY(id_godziny)
+                                )
+CREATE TABLE  ksiegowosc.pensja(id_pensji INT NOT NULL AUTO_INCREMENT,
+                                stanowisko VARCHAR(50),
+                                kwota FLOAT NOT NULL,
+                                PRIMARY KEY(id_pensji)
+                                );
+CREATE TABLE ksiegowosc.premia(id_premii INT NOT NULL AUTO_INCREMENT,
+                               rodzaj VARCHAR(30),
+                               kwota FLOAT,
+                               PRIMARY KEY(id_premii)
+                               );
+CREATE TABLE ksiegowosc.wynagrodzenie(id_wynagrodzenia INT NOT NULL AUTO_INCREMENT,
+                                      data DATE,
+                                      id_pracownika INT NOT NULL,
+                                      id_godziny INT,
+                                      id_pensji INT NOT NULL,
+                                      id_premii INT,
+                                      PRIMARY KEY(id_wynagrodzenia)
+                                      );
+ALTER TABLE ksiegowosc.godziny
+ADD CONSTRAINT FK_pracownik
+FOREIGN KEY(id_pracownika) REFERENCES pracownicy(id_pracownika);
+
+ALTER TABLE wynagrodzenie
+ADD CONSTRAINT FK_pracownicy
+FOREIGN KEY(id_pracownika) REFERENCES pracownicy(id_pracownika);
+
+ALTER TABLE wynagrodzenie
+ADD CONSTRAINT FK_godziny
+FOREIGN KEY(id_godziny) REFERENCES godziny(id_godziny);
+
+ALTER TABLE wynagrodzenie
+ADD CONSTRAINT FK_pensji
+FOREIGN KEY(id_pensji) REFERENCES pensja(id_pensji);
+
+ALTER TABLE wynagrodzenie
+ADD CONSTRAINT FK_premii
+FOREIGN KEY(id_premii) REFERENCES premia(id_premii);
+
+/* Zad5 */
+
+INSERT INTO pracownicy VALUES (1,"Janusz","Bak","ul. Zielna 5a, Kraków","675666435");
+INSERT INTO pracownicy VALUES (2,"Janina","Bakowska","ul. Siewna 5a, Kraków","675634435");
+INSERT INTO pracownicy VALUES (3,"Bogusław","Linda","ul. Zielona 5b, Kraków","567634435");
+INSERT INTO pracownicy VALUES (4,"Maciej","Szłapa","ul. Królewska 12/34, Kraków","534934435");
+INSERT INTO pracownicy VALUES (5,"Joanna","Jelonek","ul. Nowohucka 34/5, Kraków","685634499");
+INSERT INTO pracownicy VALUES (6,"Jan","Dowbor","ul. Radzikowskiego 126/3, Kraków","775634435");
+INSERT INTO pracownicy VALUES (7,"Katarzyna","Kowalska","ul. Zakręt 12, Kraków","50634435");
+INSERT INTO pracownicy VALUES (8,"Monika","Raj","ul. Księcia Józefa 34/2, Kraków","704634435");
+INSERT INTO pracownicy VALUES (9,"Faustyna","Gołąb","ul. Mogilska 12, Kraków","575634435");
+INSERT INTO pracownicy VALUES (10,"Barbara","Mirzec","ul. Grzegórzecka 27, Kraków","775344435");
+
+INSERT INTO godziny VALUES(1,"2019-11-03",5,3);
+INSERT INTO godziny VALUES(2,"2019-11-03",5,3);
+INSERT INTO godziny VALUES(3,"2019-11-04",8,5);
+INSERT INTO godziny VALUES(4,"2019-11-05",8,7);
+INSERT INTO godziny VALUES(5,"2019-11-06",5,8);
+INSERT INTO godziny VALUES(6,"2019-11-07",10,1);
+INSERT INTO godziny VALUES(7,"2019-11-08",10,3);
+INSERT INTO godziny VALUES(8,"2019-11-09",15,4);
+INSERT INTO godziny VALUES(9,"2019-11-10",5,9);
+INSERT INTO godziny VALUES(10,"2019-11-11",8,10);
+
+INSERT INTO pensja VALUES(1,"księgowy",2500.00);
+INSERT INTO pensja VALUES(2,"młodszy programista JAVA",3500.00);
+INSERT INTO pensja VALUES(3,"starszy programista JAVA",7500.00);
+INSERT INTO pensja VALUES(4,"analityk",4500.00);
+INSERT INTO pensja VALUES(5,"prawnik",5500.00);
+INSERT INTO pensja VALUES(6,"specjalista HR",3500.00);
+INSERT INTO pensja VALUES(7,"manager",4500.00);
+INSERT INTO pensja VALUES(8,"dyrektor",11500.00);
+INSERT INTO pensja VALUES(9,"specjalista UX",2500.00);
+INSERT INTO pensja VALUES(10,"programista JavaScript",5500.00);
+
+INSERT INTO premia VALUES(1,"tygodniowa",100.00);
+INSERT INTO premia VALUES(2,"tygodniowa",100.00);
+INSERT INTO premia VALUES(3,"miesięczna",700.00);
+INSERT INTO premia VALUES(4,"roczna",1800.00);
+INSERT INTO premia VALUES(5,"kwartalna",1000.00);
+INSERT INTO premia VALUES(6,"nadgodziny 1",100.00);
+INSERT INTO premia VALUES(7,"nadgodziny 2",300.00);
+INSERT INTO premia VALUES(8,"nadgodziny 3",500.00);
+INSERT INTO premia VALUES(9,"projekt",1000.00);
+INSERT INTO premia VALUES(10,"projekt 2",1500.00);
+
+INSERT INTO wynagrodzenie VALUES(1,"2019-02-01",1,2,4,3);
+INSERT INTO wynagrodzenie VALUES(2,"2019-02-04",1,6,4,3);
+INSERT INTO wynagrodzenie VALUES(3,"2019-03-01",1,2,4,3);
+INSERT INTO wynagrodzenie VALUES(4,"2019-04-01",1,2,4,7);
+INSERT INTO wynagrodzenie VALUES(5,"2019-05-01",3,2,4,10);
+INSERT INTO wynagrodzenie VALUES(6,"2019-06-01",6,8,9,3);
+INSERT INTO wynagrodzenie VALUES(7,"2019-07-01",1,8,4,3);
+INSERT INTO wynagrodzenie VALUES(8,"2019-08-01",4,2,7,9);
+INSERT INTO wynagrodzenie VALUES(9,"2019-09-01",1,5,3,3);
+INSERT INTO wynagrodzenie VALUES(10,"2019-10-01",1,2,4,1);
+
+
+/* Zad6 */
+
+SELECT id_pracownika, nazwisko FROM pracownicy;
+
+SELECT id_pracownika FROM wynagrodzenie 
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji 
+WHERE kwota>1000.00
+ORDER BY id_pracownika;
+
+SELECT id_pracownika FROM wynagrodzenie 
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji 
+LEFT JOIN premia ON wynagrodzenie.id_premii = premia.id_premii
+WHERE pensja.kwota>2000.00 AND wynagrodzenie.id_premii = 1;
+
+SELECT * FROM pracownicy WHERE imie LIKE "J%";
+
+SELECT * FROM pracownicy WHERE imie LIKE "%a" AND nazwisko LIKE "%n%";
+
+SELECT imie, nazwisko, liczba_godzin-160 FROM pracownicy 
+LEFT JOIN godziny ON pracownicy.id_pracownika = godziny.id_pracownika 
+WHERE liczba_godzin>160;
+
+SELECT imie, nazwisko FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+WHERE pensja.kwota >= 1500.00 AND  pensja.kwota<=3000.00;
+
+SELECT imie, nazwisko FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN godziny ON wynagrodzenie.id_godziny = godziny.id_godziny
+LEFT JOIN premia ON wynagrodzenie.id_premii = premia.id_premii
+WHERE premia.kwota = 1 AND godziny.liczba_godzin>160;
+
+SELECT imie, nazwisko FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN godziny ON wynagrodzenie.id_godziny = godziny.id_godziny
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+ORDER BY pensja.kwota;
+
+SELECT DISTINCT imie, nazwisko FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN godziny ON wynagrodzenie.id_godziny = godziny.id_godziny
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+LEFT JOIN premia ON wynagrodzenie.id_premii = premia.id_premii
+ORDER BY pensja.kwota AND premia.kwota DESC;
+
+SELECT COUNT(stanowisko), stanowisko FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+GROUP BY pensja.stanowisko;
+
+SELECT AVG(kwota), MIN(kwota), MAX(kwota) FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+GROUP BY pensja.stanowisko HAVING stanowisko="dyrektor";
+
+SELECT SUM(kwota) FROM wynagrodzenie 
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji;
+
+SELECT stanowisko, SUM(kwota) AS suma FROM wynagrodzenie 
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+GROUP BY pensja.stanowisko;
+
+SELECT COUNT(pensja.kwota), stanowisko FROM wynagrodzenie 
+LEFT JOIN premia ON wynagrodzenie.id_premii = premia.id_premii
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+WHERE pensja.kwota IS NOT NULL
+GROUP BY pensja.stanowisko;
+
+DELETE FROM pracownicy 
+WHERE EXISTS
+( SELECT * FROM wynagrodzenie 
+LEFT JOIN pracownicy ON wynagrodzenie.id_pracownika = pracownicy.id_pracownika
+LEFT JOIN pensja ON wynagrodzenie.id_pensji = pensja.id_pensji
+WHERE pensja.kwota < 1200);
+
+
+
+
