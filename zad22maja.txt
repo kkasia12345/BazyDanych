@@ -1,0 +1,11 @@
+pg_dump -U postgres -Fc firma > zad15maja.sql
+
+pg_restore -U postgres -d firma "C:\Users\Lenovo\Desktop\STUDIA2\Bazy danych\zad15maja.sql"
+
+BACKUP DATABASE AdventureWorks2017 TO DISK = 'C:\Users\Lenovo\Desktop\STUDIA2\Bazy danych\backup.bak' WITH FORMAT;
+
+CREATE VIEW 
+
+log_dep AS SELECT hmd.Name, hme.LoginID FROM [AdventureWorks2017].[HumanResources].[Department] hmd JOIN  
+[AdventureWorks2017].[HumanResources].[EmployeeDepartmentHistory] hmedh ON hmd.DepartmentID = hmedh.DepartmentID
+JOIN [AdventureWorks2017].[HumanResources].[Employee] hme ON hme.BusinessEntityID = hmedh.BusinessEntityID;
